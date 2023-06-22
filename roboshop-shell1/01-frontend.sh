@@ -11,7 +11,7 @@ curl -o /tmp/${component}.zip https://roboshop-artifacts.s3.amazonaws.com/${comp
 echo -e "\${color} Extract the frontend content\${nocolor}"
 cd /usr/share/nginx/html &>>${log}
 unzip /tmp/${component}.zip &>>${log}
-#echo "\e[33mcreate ngnix proxy configuration\e[0m" &>>/tmp/roboshop.log
+echo "\e[33mUpdate frontend config\e[0m" &>>/tmp/roboshop.log
 #vim /etc/nginx/default.d/roboshop.conf
 echo-e "\${color} Start & Enable Nginx service\${nocolor}"
 systemctl enable nginx &>>${log}
