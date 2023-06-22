@@ -1,19 +1,19 @@
 source common.sh
-echo "\${color} Install ngnix \${nocolor}" &>>${log}
+echo -e "\${color} Install ngnix \${nocolor}" &>>${log}
 yum install nginx -y
 
-echo "\${color} Remove the default content\${nocolor}" &>>${log}
+echo-e "\${color} Remove the default content\${nocolor}" &>>${log}
 rm -rf /usr/share/nginx/html/*
 
-echo "\${color} Download front end content\${nocolor}" &>>${log}
+echo-e "\${color} Download front end content\${nocolor}" &>>${log}
 curl -o /tmp/${component}.zip https://roboshop-artifacts.s3.amazonaws.com/${component}.zip
 
-echo "\${color} Extract the frontend content\${nocolor}" &>>${log}
+echo -e "\${color} Extract the frontend content\${nocolor}" &>>${log}
 cd /usr/share/nginx/html
 unzip /tmp/${component}.zip
 #echo "\e[33mcreate ngnix proxy configuration\e[0m" &>>/tmp/roboshop.log
 #vim /etc/nginx/default.d/roboshop.conf
-echo "\${color} Start & Enable Nginx service\${nocolor}" &>>${log}
+echo-e "\${color} Start & Enable Nginx service\${nocolor}" &>>${log}
 systemctl enable nginx
 systemctl readstart nginx
 
