@@ -15,6 +15,10 @@ echo -e "\e[33m Install Node Js\e[0m"
 yum install nodejs -y &>> /tmp/roboshop.log
 VALIDATE $? "Install nodeJs"
 
+echo -e "\e[33m remove app user\e[0m"
+rm -rf /home/roboshop &>> /tmp/roboshop.log
+VALIDATE $? "remove App user"
+
 echo -e "\e[33m add app user\e[0m"
 useradd roboshop &>> /tmp/roboshop.log
 VALIDATE $? "Add App user"
