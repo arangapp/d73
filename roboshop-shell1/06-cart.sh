@@ -8,13 +8,18 @@ echo -e "\e[33m Add Application user \e[0m"
 useradd roboshop &>> /tmp/roboshop.log
 
 
-echo -e "\e[33m Setup  App directory \e[0m"
+echo -e "\e[33mremove App directory \e[0m"
+rm -rf /app &>> /tmp/roboshop.log
+echo -e "\e[33m Setup App directory \e[0m"
 mkdir /app &>> /tmp/roboshop.log
 
 echo -e "\e[33m Download the application code \e[0m"
-curl -L -o /tmp/cart.zip https://roboshop-artifacts.s3.amazonaws.com/cart.zip &>> /tmp/roboshop.log
 cd /app &>> /tmp/roboshop.log
+curl -L -o /tmp/cart.zip https://roboshop-artifacts.s3.amazonaws.com/cart.zip &>> /tmp/roboshop.log
+
+echo -e "\e[33mExtract application code \e[0m"
 unzip /tmp/cart.zip &>> /tmp/roboshop.log
+cd /app &>> /tmp/roboshop.log
 
 echo -e "\e[33m download the dependencies and install rpm \e[0m"
 cd /app &>> /tmp/roboshop.log
