@@ -31,8 +31,8 @@ echo -e "\e[33m Enable & Restart server\e[0m"
 systemctl enable catalogue &>> /tmp/roboshop.log
 systemctl restart catalogue &>> /tmp/roboshop.log
 
-echo -e "\e[33m setup MongoDB repo\e[0m"
-cd mongo.repo /etc/yum.repos.d/mongo.repo &>> /tmp/roboshop.log
+echo -e "\e[33m setup mongodb repo\e[0m"
+cd /home/centos/d73/roboshop-shell1/mongo.repo /etc/yum.repos.d/mongo.repo &>> /tmp/roboshop.log
 
 echo -e "\e[33m Install mongodb-client\e[0m"
 yum install mongodb-org-shell -y &>> /tmp/roboshop.log
