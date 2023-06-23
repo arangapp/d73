@@ -1,5 +1,5 @@
 echo -e "\e[33m Setup the MongoDB repo file \e[0m"
-cp /home/centos/d73/roboshop-shell1/mongo.repo  /etc/yum.repos.d/mongo.repo &>> /tmp/roboshop.log
+cp mongo.repo  /etc/yum.repos.d/mongo.repo &>> /tmp/roboshop.log
 
 echo -e "\e[33m Install MongoDB \e[0m"
 yum install mongodb-org -y &>> /tmp/roboshop.log
