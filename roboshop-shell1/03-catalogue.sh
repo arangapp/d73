@@ -7,11 +7,13 @@ echo -e "\e[33m add app user\e[0m"
 useradd roboshop &>> /tmp/roboshop.log
 
 echo -e "\e[33m setup an app directory\e[0m"
+rm -rf /app &>> /tmp/roboshop.log
 mkdir /app &>> /tmp/roboshop.log
 
 echo -e "\e[33m Download the application code to created app directory\e[0m"
 curl -o /tmp/catalogue.zip https://roboshop-artifacts.s3.amazonaws.com/catalogue.zip &>> /tmp/roboshop.log
 cd /app
+
 echo -e "\e[33m Extract code \e[0m"
 unzip /tmp/catalogue.zip &>> /tmp/roboshop.log
 cd /app
