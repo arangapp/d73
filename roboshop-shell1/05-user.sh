@@ -24,8 +24,12 @@ cp /home/centos/d73/roboshop-shell1/user.service  /etc/systemd/system/user.servi
 echo -e "\e[33 Load the service\e[0m"
 systemctl daemon-reload &>> /tmp/roboshop.log
 
+echo -e "\e[33 Enable & Restart service\e[0m"
+systemctl enable user &>> /tmp/roboshop.log
+systemctl restart user  &>> /tmp/roboshop.log
+
 echo -e "\e[33 setup mongodb repo\e[0m"
-cd mongo.repo /etc/yum.repos.d/mongo.repo &>> /tmp/roboshop.log
+cd /home/centos/d73/roboshop-shell1/mongo.repo /etc/yum.repos.d/mongo.repo &>> /tmp/roboshop.log
 
 echo -e "\e[33 Install mongodb\e[0m"
 yum install mongodb-org-shell -y &>> /tmp/roboshop.log
@@ -33,6 +37,4 @@ yum install mongodb-org-shell -y &>> /tmp/roboshop.log
 echo -e "\e[33 Load Schema\e[0m"
 mongo --host mongodb-dev.adevlearn.shop </app/schema/user.js &>> /tmp/roboshop.log
 
-echo -e "\e[33 Enable & Restart service\e[0m"
-systemctl enable user &>> /tmp/roboshop.log
-systemctl restart user  &>> /tmp/roboshop.log
+
