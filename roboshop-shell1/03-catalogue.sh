@@ -17,7 +17,7 @@ VALIDATE $? "Install nodeJs"
 
 echo -e "\e[33m add app user\e[0m"
 useradd roboshop &>> /tmp/roboshop.log
-VALIDATE $? "Add Appuser"
+VALIDATE $? "Add App user"
 
 echo -e "\e[33m setup an app directory\e[0m"
 rm -rf /app &>> /tmp/roboshop.log
@@ -55,11 +55,11 @@ VALIDATE $? "enable &restart service"
 
 echo -e "\e[33m setup mongodb repo\e[0m"
 cd /home/centos/d73/roboshop-shell1/mongo.repo /etc/yum.repos.d/mongo.repo &>> /tmp/roboshop.log
-VALIDATE $? "Setup mongo repo"
+VALIDATE $? "Setup mongodb repo"
 
 echo -e "\e[33m Install mongodb-client\e[0m"
 yum install mongodb-org-shell -y &>> /tmp/roboshop.log
-VALIDATE $? "Install mongo client"
+VALIDATE $? "Install mongodb client"
 
 echo -e "\e[33m Load Schema\e[0m"
 mongo --host mongodb-dev.adevlearn.shop </app/schema/catalogue.js &>> /tmp/roboshop.log
