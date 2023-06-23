@@ -11,11 +11,11 @@ mkdir /app &>> /tmp/roboshop.log
 
 echo -e "\e[33m Download the application code to created app directory \e[0m"
 curl -L -o /tmp/user.zip https://roboshop-artifacts.s3.amazonaws.com/user.zip &>> /tmp/roboshop.log
-cd /app &>> /tmp/roboshop.log
+cd /app
 unzip /tmp/user.zip &>> /tmp/roboshop.log
 
 echo -e "\e[33m download the dependencies and install npm \e[0m"
-cd /app &>> /tmp/roboshop.log
+cd /app
 npm install &>> /tmp/roboshop.log
 
 echo -e "\e[33m Setup SystemD User Service \e[0m"
