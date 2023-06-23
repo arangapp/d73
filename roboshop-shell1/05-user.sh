@@ -12,14 +12,16 @@ echo -e "\e[33m Setup App directory \e[0m"
 mkdir /app &>> /tmp/roboshop.log
 
 echo -e "\e[33m Download the application code to created app directory \e[0m"
-curl -L -o /tmp/user.zip https://roboshop-artifacts.s3.amazonaws.com/user.zip &>> /tmp/roboshop.log
 cd /app
+curl -L -o /tmp/user.zip https://roboshop-artifacts.s3.amazonaws.com/user.zip &>> /tmp/roboshop.log
+
+echo -e "\e[33mExtract app content\e[0m"
 unzip /tmp/user.zip &>> /tmp/roboshop.log
+cd /app
 
 echo -e "\e[33m download the dependencies and install npm \e[0m"
-cd /app
 npm install &>> /tmp/roboshop.log
-
+cd /app
 echo -e "\e[33m Setup SystemD User Service \e[0m"
 cp /home/centos/d73/roboshop-shell1/user.service  /etc/systemd/system/user.service &>> /tmp/roboshop.log
 
