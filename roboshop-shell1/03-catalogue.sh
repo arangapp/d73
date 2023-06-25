@@ -21,6 +21,7 @@ VALIDATE $? "Install nodeJs"
 
 echo -e "\e[33madd app user\e[0m"
 rm -rf roboshop
+VALIDATE $? "Add App user"
 useradd roboshop &>> /tmp/roboshop.log
 VALIDATE $? "Add App user"
 
