@@ -58,7 +58,7 @@ systemctl restart catalogue &>> /tmp/roboshop.log
 VALIDATE $? "enable &restart service"
 
 echo -e "\e[33m setup mongodb repo\e[0m"
-cd /home/centos/d73/roboshop-shell1/mongo.repo /etc/yum.repos.d/mongo.repo &>> /tmp/roboshop.log
+cp /home/centos/d73/roboshop-shell1/mongo.repo  /etc/yum.repos.d/mongo.repo &>> /tmp/roboshop.log
 VALIDATE $? "Setup mongodb repo"
 
 echo -e "\e[33mInstall mongodb-client\e[0m"
