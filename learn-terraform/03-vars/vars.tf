@@ -36,23 +36,23 @@ variable "course" {
   default = "DevOps training"
 }
 
+# list
 variable "courses" {
   default = [
-   "aws"
-   "terraform"
+   "aws",
+   "terraform",
     "Ansible"
   ]
 }
 
+#Map
 variable "course_details" {
-  aws = {
-    "ec2"
-    "s3"
-  }
-  ansible = {
-    "vars"
-    "functions"
-    "modules"
+  default = {
+    DevOps = {
+      Name = "DevOps"
+      timing = "9 am"
+       duration = "90days"
+    }
   }
 }
 
