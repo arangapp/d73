@@ -8,9 +8,10 @@ unzip /tmp/catalogue.zip
 cd /app
 npm install
 cp cp /home/centos/d73/roboshop-shell1/catalogue.service   /etc/systemd/system/catalogue.service
-systemctl daemon-reload
-systemctl enable catalogue
-systemctl start catalogue
 cp /home/centos/d73/roboshop-shell1/mongo.repo  /etc/yum.repos.d/mongo.repo &>> /tmp/roboshop.log
 yum install mongodb-org-shell -y
 mongo --host mongodb-dev.adevlearn.shop </app/schema/catalogue.js
+
+systemctl daemon-reload
+systemctl enable catalogue
+systemctl restart catalogue
