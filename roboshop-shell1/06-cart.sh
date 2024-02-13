@@ -29,8 +29,8 @@ VALIDATE $?
 
 echo -e "\e[33m  Download the application code \e[0m"
 curl -L -o /tmp/cart.zip https://roboshop-artifacts.s3.amazonaws.com/cart.zip  &>>/tmp/roboshop.log
-cd /app
-unzip /tmp/cart.zip
+cd /app &>>/tmp/roboshop.log
+unzip /tmp/cart.zip &>>/tmp/roboshop.log
 VALIDATE $?
 
 
