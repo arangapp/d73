@@ -15,8 +15,9 @@ echo -e "\e[33m Install nodejs \e[0m"
 dnf install nodejs -y &>>/tmp/roboshop.log
 VALIDATE $?
 
+
 echo -e "\e[33m remove application User \e[0m"
-rm -rf roboshop  &>>/tmp/roboshop.log
+userdel roboshop &>>/tmp/roboshop.log
 VALIDATE $?
 
 echo -e "\e[33m Add application User \e[0m"
