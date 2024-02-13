@@ -6,7 +6,7 @@ VALIDATE $?
 echo -e "\e[33m Install nodejs \e[0m"
 yum install nodejs -y &>>/tmp/roboshop.log
 VALIDATE $?
-r, -rf roboshop
+rm -rf roboshop
 echo -e "\e[33m setup an app directory \e[0m"
 useradd roboshop &>>/tmp/roboshop.log
 mkdir /app &>>/tmp/roboshop.log
