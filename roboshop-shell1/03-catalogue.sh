@@ -16,12 +16,15 @@ dnf install nodejs -y &>>/tmp/roboshop.log
 VALIDATE $?
 
 
-echo -e "\e[33m remove application User \e[0m"
-id roboshop &>>/tmp/roboshop.log
-VALIDATE $?
+#echo -e "\e[33m remove application User \e[0m"
+#id roboshop &>>/tmp/roboshop.log
+#VALIDATE $?
 
 echo -e "\e[33m Add application User \e[0m"
+id roboshop &>>/tmp/roboshop.log
+userdel roboshop &>>/tmp/roboshop.log
 useradd roboshop &>>/tmp/roboshop.log
+
 VALIDATE $?
 
 echo -e "\e[33m remove add directory \e[0m"
