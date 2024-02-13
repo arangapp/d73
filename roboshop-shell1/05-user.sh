@@ -12,8 +12,8 @@ echo -e "\e[33m Install NodeJs \e[0m"
 dnf install nodejs -y &>>/tmp/roboshop.log
 VALIDATE $?
 
-id roboshop &>>/tmp/roboshop.log
-userdel roboshop &>>/tmp/roboshop.log
+#id roboshop &>>/tmp/roboshop.log
+#userdel roboshop &>>/tmp/roboshop.log
 useradd roboshop &>>/tmp/roboshop.log
 
 
