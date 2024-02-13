@@ -17,7 +17,7 @@ VALIDATE $?
 
 
 echo -e "\e[33m remove application User \e[0m"
-userdel roboshop &>>/tmp/roboshop.log
+id roboshop &>>/tmp/roboshop.log
 VALIDATE $?
 
 echo -e "\e[33m Add application User \e[0m"
