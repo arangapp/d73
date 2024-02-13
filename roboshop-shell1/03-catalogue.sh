@@ -24,7 +24,6 @@ echo -e "\e[33m Add application User \e[0m"
 id roboshop &>>/tmp/roboshop.log
 userdel roboshop &>>/tmp/roboshop.log
 useradd roboshop &>>/tmp/roboshop.log
-
 VALIDATE $?
 
 echo -e "\e[33m remove add directory \e[0m"
@@ -39,12 +38,17 @@ echo -e "\e[33m  Download the application code \e[0m"
 curl -o /tmp/catalogue.zip https://roboshop-artifacts.s3.amazonaws.com/catalogue.zip &>>/tmp/roboshop.log
 cd /app &>> /tmp/roboshop.log &>>/tmp/roboshop.log
 VALIDATE $?
+
+echo -e "\e[33m  Unzip  application code \e[0m"
 unzip /tmp/catalogue.zip &>> /tmp/roboshop.log &>>/tmp/roboshop.log
+
+VALIDATE $?
+
 cd /app &>> /tmp/roboshop.log &>>/tmp/roboshop.log
 VALIDATE $?
 
 echo -e "\e[33m Install npm\e[0m"
-npm install &>> /tmp/roboshop.log &>>/tmp/roboshop.log
+npm install &>>/tmp/roboshop.log
 VALIDATE $?
 
 echo -e "\e[33m Setup SystemD Catalogue Service \e[0m"

@@ -30,12 +30,13 @@ echo -e "\e[33m  Download the application code \e[0m"
 curl -o /tmp/catalogue.zip https://roboshop-artifacts.s3.amazonaws.com/user.zip &>>/tmp/roboshop.log
 cd /app &>> /tmp/roboshop.log &>>/tmp/roboshop.log
 VALIDATE $?
+
 unzip /tmp/user.zip &>> /tmp/roboshop.log &>>/tmp/roboshop.log
 cd /app &>> /tmp/roboshop.log &>>/tmp/roboshop.log
 VALIDATE $?
 
 echo -e "\e[33m Install npm\e[0m"
-npm install &>> /tmp/roboshop.log &>>/tmp/roboshop.log
+npm install &>>/tmp/roboshop.log
 VALIDATE $?
 
 echo -e "\e[33m Setup SystemD Catalogue Service \e[0m"
