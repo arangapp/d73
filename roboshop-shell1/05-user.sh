@@ -1,7 +1,7 @@
 source common.sh
 
 echo -e "\e[33m module disable nodejs \e[0m"
-dnf module disable nodejs -y &>> /tmp/roboshop.log
+dnf module disable nodejs -y &>>/tmp/roboshop.log
 VALIDATE $?
 
 echo -e "\e[33m module enable nodejs \e[0m"
