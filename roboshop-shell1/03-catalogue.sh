@@ -1,7 +1,5 @@
 source common.sh
-
-##curl -sL https://rpm.nodesource.com/setup_lts.x | bash &>>/tmp/roboshop.log
-
+component =catalogue
 
 echo -e "\e[33m disable NodeJs \e[0m"
 dnf module disable nodejs -y &>>/tmp/roboshop.log
