@@ -12,6 +12,7 @@ rm -rf roboshop
 echo -e "\e[33m setup an app directory \e[0m"
 useradd roboshop &>>/tmp/roboshop.log
 
+echo -e "\e[33m add directory \e[0m"
 rm -rf app
 mkdir /app &>>/tmp/roboshop.log
 VALIDATE $?
