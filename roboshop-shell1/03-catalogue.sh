@@ -1,21 +1,30 @@
 source common.sh
 
-echo -e "\e[33m  \e[0m"
-curl -sL https://rpm.nodesource.com/setup_lts.x | bash &>>/tmp/roboshop.log
+##curl -sL https://rpm.nodesource.com/setup_lts.x | bash &>>/tmp/roboshop.log
+
+
+echo -e "\e[33m disable NodeJs \e[0m"
+dnf module disable nodejs -y &>>/tmp/roboshop.log
+
+
+echo -e "\e[33m enable nodeJs module \e[0m"
+dnf module enable nodejs:18 -y &>>/tmp/roboshop.log
 VALIDATE $?
 
 echo -e "\e[33m Install nodejs \e[0m"
-yum install nodejs -y &>>/tmp/roboshop.log
+dnf install nodejs -y &>>/tmp/roboshop.log
 VALIDATE $?
 
-##rm -rf roboshop
+echo -e "\e[33m remove application User \e[0m"
+rm -rf roboshop  &>>/tmp/roboshop.log
+VALIDATE $?
 
-echo -e "\e[33m setup an app directory \e[0m"
+echo -e "\e[33m Add application User \e[0m"
 useradd roboshop &>>/tmp/roboshop.log
 VALIDATE $?
 
 echo -e "\e[33m remove add directory \e[0m"
-rm -rf app
+rm -rf /app
 VALIDATE $?
 
 echo -e "\e[33m add directory \e[0m"
