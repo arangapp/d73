@@ -16,7 +16,7 @@ echo -e "\e[33m add user \e[0m"
 id roboshop &>>/tmp/roboshop.log
 userdel roboshop &>>/tmp/roboshop.log
 useradd roboshop &>>/tmp/roboshop.log
-
+VALIDATE $?
 
 echo -e "\e[33m remove add directory \e[0m"
 rm -rf /app
@@ -45,23 +45,23 @@ cp /home/centos/d73/roboshop-shell1/mongo.repo  /etc/yum.repos.d/mongo.repo &>>/
 VALIDATE $?
 
 cd /app
-echo -e "\e[33mSetup SystemD User Service \e[0m"
+echo -e "\e[33m Setup SystemD User Service \e[0m"
 cp /home/centos/d73/roboshop-shell1/user.service  /etc/systemd/system/user.service &>>/tmp/roboshop.log
 VALIDATE $?
 
-echo -e "\e[33Load the service\e[0m"
+echo -e "\e[33 Load the service\e[0m"
 systemctl daemon-reload &>> /tmp/roboshop.log
 VALIDATE $?
 
 
-echo -e "\e[33setup mongodb repo\e[0m"
+echo -e "\e[33 setup mongodb repo\e[0m"
 cd /home/centos/d73/roboshop-shell1/mongo.repo /etc/yum.repos.d/mongo.repo &>>/tmp/roboshop.log
 
-echo -e "\e[33Install mongodb\e[0m"
+echo -e "\e[33 Install mongodb\e[0m"
 yum install mongodb-org-shell -y &>>/tmp/roboshop.log
 VALIDATE $?
 
-echo -e "\e[33Load Schema\e[0m"
+echo -e "\e[33 Load Schema\e[0m"
 mongo --host mongodb-dev.adevlearn.shop </app/schema/user.js &>>/tmp/roboshop.log
 VALIDATE $?
 
