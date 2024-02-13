@@ -6,8 +6,3 @@ else
 	echo "$2 ... SUCCESS"
 fi
 }
-
-node_js() {
-
-
-}
