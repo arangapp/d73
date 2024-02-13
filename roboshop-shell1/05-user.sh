@@ -27,15 +27,14 @@ VALIDATE $?
 
 
 echo -e "\e[33m  Download the application code \e[0m"
-curl -o /tmp/catalogue.zip https://roboshop-artifacts.s3.amazonaws.com/user.zip &>>/tmp/roboshop.log
-cd /app &>> /tmp/roboshop.log &>>/tmp/roboshop.log
+curl -L -o /tmp/user.zip https://roboshop-artifacts.s3.amazonaws.com/user.zip  &>>/tmp/roboshop.log
+cd /app
+unzip /tmp/user.zip
 VALIDATE $?
 
-unzip /tmp/user.zip &>> /tmp/roboshop.log &>>/tmp/roboshop.log
-cd /app &>> /tmp/roboshop.log &>>/tmp/roboshop.log
-VALIDATE $?
 
 echo -e "\e[33m Install npm\e[0m"
+cd /app
 npm install &>>/tmp/roboshop.log
 VALIDATE $?
 
