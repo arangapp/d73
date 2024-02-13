@@ -1,11 +1,4 @@
-VALIDATE(){
-if [ $1 -ne 0 ]; then
-	echo "$2 ... FAILURE"
-	exit 1
-else
-	echo "$2 ... SUCCESS"
-fi
-}
+source common.sh
 echo -e "\e[33m Install nginx \e[0m"
 yum install nginx -y &>> /tmp/roboshop.log
 VALIDATE $? "ngnix installed"
