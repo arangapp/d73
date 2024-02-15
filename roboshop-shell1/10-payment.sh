@@ -7,7 +7,7 @@ VALIDATE $?
 
 echo -e "\e[33m add application user \e[0m"
 id roboshop &>>${log}
-userdel roboshop &>>${log}
+userdel -r roboshop &>>${log}
 useradd roboshop &>>${log}
 VALIDATE $?
 
