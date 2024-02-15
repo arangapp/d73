@@ -1,12 +1,12 @@
 [Unit]
-Description=Shipping Service
+Description=${component} Service
 
 [Service]
-User=roboshop
-Environment=CART_ENDPOINT=cart-dev.adevlearn.shop:8080
-Environment=DB_HOST=mysql-dev.adevlearn.shop
-ExecStart=/bin/java -jar /app/shipping.jar
-SyslogIdentifier=shipping
+${component}=roboshop
+Environment=CART_ENDPOINT=${component}-dev.adevlearn.shop:8080
+Environment=DB_HOST=${component}-dev.adevlearn.shop
+ExecStart=/bin/java -jar /app/${component}.jar
+SyslogIdentifier=${component}
 
 [Install]
-WantedBy=multi-user.target
+WantedBy=multi-${component}.target

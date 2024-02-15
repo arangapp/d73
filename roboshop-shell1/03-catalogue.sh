@@ -1,27 +1,27 @@
 source common.sh
-component =catalogue
+component=${component}
 
 echo -e "\e[33m disable NodeJs \e[0m"
-dnf module disable nodejs -y &>>/tmp/roboshop.log
+dnf module disable nodejs -y &>>${log}
 
 
 echo -e "\e[33m enable nodeJs module \e[0m"
-dnf module enable nodejs:18 -y &>>/tmp/roboshop.log
+dnf module enable nodejs:18 -y &>>${log}
 VALIDATE $?
 
 echo -e "\e[33m Install nodejs \e[0m"
-dnf install nodejs -y &>>/tmp/roboshop.log
+dnf install nodejs -y &>>${log}
 VALIDATE $?
 
 
-#echo -e "\e[33m remove application User \e[0m"
-#id roboshop &>>/tmp/roboshop.log
+#echo -e "\e[33m remove application ${component} \e[0m"
+#id roboshop &>>${log}
 #VALIDATE $?
 
-echo -e "\e[33m Add application User \e[0m"
-id roboshop &>>/tmp/roboshop.log
-userdel roboshop &>>/tmp/roboshop.log
-useradd roboshop &>>/tmp/roboshop.log
+echo -e "\e[33m Add application ${component} \e[0m"
+id roboshop &>>${log}
+userdel roboshop &>>${log}
+useradd roboshop &>>${log}
 VALIDATE $?
 
 echo -e "\e[33m remove add directory \e[0m"
@@ -29,41 +29,41 @@ rm -rf /app
 VALIDATE $?
 
 echo -e "\e[33m add directory \e[0m"
-mkdir /app &>>/tmp/roboshop.log
+mkdir /app &>>${log}
 VALIDATE $?
 
 echo -e "\e[33m  Download the application code \e[0m"
-curl -o /tmp/catalogue.zip https://roboshop-artifacts.s3.amazonaws.com/catalogue.zip &>>/tmp/roboshop.log
-cd /app &>> /tmp/roboshop.log &>>/tmp/roboshop.log
+curl -o /tmp/${component}.zip https://roboshop-artifacts.s3.amazonaws.com/${component}.zip &>>${log}
+cd /app &>> ${log} &>>${log}
 VALIDATE $?
 
 echo -e "\e[33m  Unzip  application code \e[0m"
-unzip /tmp/catalogue.zip &>> /tmp/roboshop.log &>>/tmp/roboshop.log
+unzip /tmp/${component}.zip &>> ${log} &>>${log}
 
 VALIDATE $?
 
-cd /app &>> /tmp/roboshop.log &>>/tmp/roboshop.log
+cd /app &>> ${log} &>>${log}
 VALIDATE $?
 
 echo -e "\e[33m Install npm\e[0m"
-npm install &>>/tmp/roboshop.log
+npm install &>>${log}
 VALIDATE $?
 
-echo -e "\e[33m Setup SystemD Catalogue Service \e[0m"
-cp /home/centos/d73/roboshop-shell1/catalogue.service  /etc/systemd/system/catalogue.service &>>/tmp/roboshop.log
-cp /home/centos/d73/roboshop-shell1/mongo.repo  /etc/yum.repos.d/mongo.repo &>>/tmp/roboshop.log
+echo -e "\e[33m Setup SystemD ${component} Service \e[0m"
+cp /home/centos/d73/roboshop-shell1/${component}.service  /etc/systemd/system/${component}.service &>>${log}
+cp /home/centos/d73/roboshop-shell1/mongo.repo  /etc/yum.repos.d/mongo.repo &>>${log}
 VALIDATE $?
 
 echo -e "\e[33m setup MongoDB repo  \e[0m"
-yum install mongodb-org-shell -y &>>/tmp/roboshop.log
-mongo --host mongodb-dev.adevlearn.shop </app/schema/catalogue.js &>>/tmp/roboshop.log
+yum install mongodb-org-shell -y &>>${log}
+mongo --host mongodb-dev.adevlearn.shop </app/schema/${component}.js &>>${log}
 VALIDATE $?
 
 echo -e "\e[33m Load the service \e[0m"
-systemctl daemon-reload &>>/tmp/roboshop.log
+systemctl daemon-reload &>>${log}
 VALIDATE $?
 
 echo -e "\e[33m enable & Start the service \e[0m"
-systemctl enable catalogue &>>/tmp/roboshop.log
-systemctl restart catalogue &>>/tmp/roboshop.log
+systemctl enable ${component} &>>${log}
+systemctl restart ${component} &>>${log}
 VALIDATE $?

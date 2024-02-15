@@ -1,12 +1,12 @@
 [Unit]
-Description = Dispatch Service
+Description = ${component} Service
 [Service]
-User=roboshop
-Environment=AMQP_HOST=rabbitmq-dev.adevlearn.shop
+${component}=roboshop
+Environment=AMQP_HOST=${component}-dev.adevlearn.shop
 Environment=AMQP_USER=roboshop
 Environment=AMQP_PASS=roboshop123
-ExecStart=/app/dispatch
-SyslogIdentifier=dispatch
+ExecStart=/app/${component}
+SyslogIdentifier=${component}
 
 [Install]
-WantedBy=multi-user.target
+WantedBy=multi-${component}.target

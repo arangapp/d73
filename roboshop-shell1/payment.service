@@ -1,20 +1,20 @@
 [Unit]
-Description=Payment Service
+Description=${component} Service
 
 [Service]
-User=root
+${component}=root
 WorkingDirectory=/app
-Environment=CART_HOST=cart-dev.adevlearn.shop
+Environment=CART_HOST=${component}-dev.adevlearn.shop
 Environment=CART_PORT=8080
-Environment=USER_HOST=user-dev.adevlearn.shop
+Environment=USER_HOST=${component}-dev.adevlearn.shop
 Environment=USER_PORT=8080
-Environment=AMQP_HOST=rabbitmq-dev.adevlearn.shop
+Environment=AMQP_HOST=${component}-dev.adevlearn.shop
 Environment=AMQP_USER=roboshop
 Environment=AMQP_PASS=roboshop123
 
-ExecStart=/usr/local/bin/uwsgi --ini payment.ini
+ExecStart=/usr/local/bin/uwsgi --ini ${component}.ini
 ExecStop=/bin/kill -9 $MAINPID
-SyslogIdentifier=payment
+SyslogIdentifier=${component}
 
 [Install]
-WantedBy=multi-user.target
+WantedBy=multi-${component}.target

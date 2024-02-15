@@ -17,14 +17,14 @@ data "aws_ami" "example" {
 variable "instances" {
 
   default = {
-    frontend ={
-      name = "frontend"
+    ${component} ={
+      name = "${component}"
     }
-    catalogue ={
-      name = "catalogue"
+    ${component} ={
+      name = "${component}"
     }
-    cart ={
-      name = "cart"
+    ${component} ={
+      name = "${component}"
     }
   }
 }

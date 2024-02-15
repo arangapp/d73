@@ -1,12 +1,12 @@
 [Unit]
-Description = Catalogue Service
+Description = ${component} Service
 
 [Service]
-User=roboshop
+${component}=roboshop
 Environment=MONGO=true
-Environment=MONGO_URL="mongodb://mongodb-dev.adevlearn.shop:27017/catalogue"
+Environment=MONGO_URL="mongodb://mongodb-dev.adevlearn.shop:27017/${component}"
 ExecStart=/bin/node /app/server.js
-SyslogIdentifier=catalogue
+SyslogIdentifier=${component}
 
 [Install]
-WantedBy=multi-user.target
+WantedBy=multi-${component}.target

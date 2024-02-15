@@ -1,12 +1,12 @@
 [Unit]
-Description = User Service
+Description = ${component} Service
 [Service]
-User=roboshop
+${component}=roboshop
 Environment=MONGO=true
-Environment=REDIS_HOST="redis-dev.adevlearn.shop"
+Environment=${component}_HOST="${component}-dev.adevlearn.shop"
 Environment=MONGO_URL="mongodb-dev.adevlearn.shop:27017/users"
 ExecStart=/bin/node /app/server.js
-SyslogIdentifier=user
+SyslogIdentifier=${component}
 
 [Install]
-WantedBy=multi-user.target
+WantedBy=multi-${component}.target

@@ -1,12 +1,12 @@
 [Unit]
-Description = Cart Service
+Description = ${component} Service
 [Service]
-User=roboshop
-Environment=REDIS_HOST=redis-dev.adevlearn.shop
-Environment=CATALOGUE_HOST=catalogue-dev.adevlearn.shop
-Environment=CATALOGUE_PORT=8080
+${component}=roboshop
+Environment=${component}_HOST=${component}-dev.adevlearn.shop
+Environment=${component}_HOST=${component}-dev.adevlearn.shop
+Environment=${component}_PORT=8080
 ExecStart=/bin/node /app/server.js
-SyslogIdentifier=cart
+SyslogIdentifier=${component}
 
 [Install]
-WantedBy=multi-user.target
+WantedBy=multi-${component}.target

@@ -1,26 +1,27 @@
 source common.sh
+component=${component}
 
 echo -e "\e[33m configure yum repos \e[0m"
-curl -s https://packagecloud.io/install/repositories/rabbitmq/erlang/script.rpm.sh | bash &>>/tmp/roboshop.log
+curl -s https://packagecloud.io/install/repositories/${component}/erlang/script.rpm.sh | bash &>>${log}
 VALIDATE $?
 
-echo -e "\e[33m Configure YUM Repos for RabbitMQ \e[0m"
-curl -s https://packagecloud.io/install/repositories/rabbitmq/rabbitmq-server/script.rpm.sh | bash &>>/tmp/roboshop.log
+echo -e "\e[33m Configure YUM Repos for ${component} \e[0m"
+curl -s https://packagecloud.io/install/repositories/${component}/${component}-server/script.rpm.sh | bash &>>${log}
 VALIDATE $?
 
-echo -e "\e[33m Install RabbitMQ \e[0m"
-dnf install rabbitmq-server -y &>>/tmp/roboshop.log
+echo -e "\e[33m Install ${component} \e[0m"
+dnf install ${component}-server -y &>>${log}
 VALIDATE $?
 
-echo -e "\e[33m enable & start rabbitmq \e[0m"
-systemctl enable rabbitmq-server  &>>/tmp/roboshop.log
-systemctl restart rabbitmq-server  &>>/tmp/roboshop.log
+echo -e "\e[33m enable & start ${component} \e[0m"
+systemctl enable ${component}-server  &>>${log}
+systemctl restart ${component}-server  &>>${log}
 VALIDATE $?
 
-echo -e "\e[33m create a user for the application \e[0m"
-rabbitmqctl add_user roboshop roboshop123 &>>/tmp/roboshop.log
+echo -e "\e[33m create a ${component} for the application \e[0m"
+rabbitmqctl add_user roboshop roboshop123 &>>${log}
 VALIDATE $?
-echo -e "\e[33m set permission to user for the application \e[0m"
-rabbitmqctl set_permissions -p / roboshop ".*" ".*" ".*" &>>/tmp/roboshop.log
+echo -e "\e[33m set permission to ${component} for the application \e[0m"
+rabbitmqctl set_permissions -p / roboshop ".*" ".*" ".*" &>>${log}
 VALIDATE $?
 

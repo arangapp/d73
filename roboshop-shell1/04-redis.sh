@@ -1,22 +1,23 @@
 source common.sh
+component=${component}
 
 echo -e "\e[33m Install rpm \e[0m"
-dnf install https://rpms.remirepo.net/enterprise/remi-release-8.rpm -y &>>/tmp/roboshop.log
+dnf install https://rpms.remirepo.net/enterprise/remi-release-8.rpm -y &>>${log}
 VALIDATE $?
 
-echo -e "\e[33m Enable redis 6.2 \e[0m"
-dnf module enable redis:remi-6.2 -y &>>/tmp/roboshop.log
+echo -e "\e[33m Enable ${component} 6.2 \e[0m"
+dnf module enable ${component}:remi-6.2 -y &>>${log}
 VALIDATE $?
 
-echo -e "\e[33mInstall redis\e[0m"
-dnf install redis -y  &>>/tmp/roboshop.log
+echo -e "\e[33mInstall ${component}\e[0m"
+dnf install ${component} -y  &>>${log}
 VALIDATE $?
 
 echo -e "\e[33m update listen address\e[0m"
-sed -i -e 's/127.0.0.1/0.0.0.0/g' /etc/redis.conf /etc/redis/redis.conf &>>/tmp/roboshop.log
+sed -i -e 's/127.0.0.1/0.0.0.0/g' /etc/${component}.conf /etc/${component}/${component}.conf &>>${log}
 VALIDATE $?
 
-echo -e "\e[33mEnable and restart redis\e[0m"
-systemctl enable redis &>>/tmp/roboshop.log
-systemctl start redis &>>/tmp/roboshop.log
+echo -e "\e[33mEnable and restart ${component}\e[0m"
+systemctl enable ${component} &>>${log}
+systemctl start ${component} &>>${log}
 VALIDATE $?
