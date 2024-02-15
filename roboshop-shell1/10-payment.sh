@@ -6,7 +6,7 @@ dnf install python36 gcc python3-devel -y &>>${log}
 VALIDATE $?
 
 echo -e "\e[33m add application user \e[0m"
-id roboshop &>>/tmp/roboshop.log
+id roboshop &>>&>>${log}
 userdel roboshop &>>${log}
 useradd roboshop &>>${log}
 VALIDATE $?
