@@ -56,3 +56,4 @@ VALIDATE $?
 echo -e "\e[33 Enable and restart service\e[0m"
 systemctl enable cart &>>/tmp/roboshop.log
 systemctl start cart  &>>/tmp/roboshop.log
+VALIDATE $?
