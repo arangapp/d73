@@ -19,7 +19,7 @@ useradd roboshop &>>/tmp/roboshop.log
 VALIDATE $?
 
 echo -e "\e[33m remove add directory \e[0m"
-rm -rf /app
+rm -rf /app &>>/tmp/roboshop.log
 VALIDATE $?
 
 echo -e "\e[33m add directory \e[0m"
@@ -29,8 +29,8 @@ VALIDATE $?
 
 echo -e "\e[33m  Download the application code \e[0m"
 curl -L -o /tmp/user.zip https://roboshop-artifacts.s3.amazonaws.com/user.zip  &>>/tmp/roboshop.log
-cd /app
-unzip /tmp/user.zip
+cd /app &>>/tmp/roboshop.log
+unzip /tmp/user.zip &>>/tmp/roboshop.log
 VALIDATE $?
 
 
