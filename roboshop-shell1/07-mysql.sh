@@ -13,7 +13,7 @@ sudo mkdir -p /etc/yum.repos.d/
 VALIDATE $?
 
 echo -e "\e[33m Setup the MySQL5.7 repo file \e[0m"
-cp cp /home/centos/d73/roboshop-shell1/mysql.repo /etc/yum.repos.d/mysql.repo &>>/tmp/roboshop.log
+cp /home/centos/d73/roboshop-shell1/mysql.repo /etc/yum.repos.d/mysql.repo  &>>/tmp/roboshop.log
 VALIDATE $?
 
 echo -e "\e[33m Install MySQL Server \e[0m"
