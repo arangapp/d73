@@ -11,6 +11,10 @@ userdel -r roboshop &>>${log}
 useradd roboshop &>>${log}
 VALIDATE $?
 
+echo -e "\e[33m remove add directory \e[0m"
+rm -rf /app &>>${log}
+VALIDATE $?
+
 echo -e "\e[33m Set an app directory \e[0m"
 mkdir /app &>>${log}
 VALIDATE $?
