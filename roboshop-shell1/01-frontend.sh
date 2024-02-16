@@ -2,7 +2,7 @@ source common.sh
 component=frontend
 
 echo -e "\e[33m Install nginx \e[0m"
-dnf install nginx -y  ${log}
+dnf install nginx -y  &>>${log}
 VALIDATE $? "ngnix installed"
 
 echo -e "\e[33m Remove the default content\e[0m"
