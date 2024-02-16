@@ -1,5 +1,5 @@
 source common.sh
-component=${component}
+component=catalogue
 
 echo -e "\e[33m disable NodeJs \e[0m"
 dnf module disable nodejs -y &>>${log}
@@ -38,7 +38,7 @@ cd /app &>> ${log} &>>${log}
 VALIDATE $?
 
 echo -e "\e[33m  Unzip  application code \e[0m"
-unzip /tmp/${component}.zip &>> ${log} &>>${log}
+unzip /tmp/${component}.zip &>>${log}
 
 VALIDATE $?
 
