@@ -1,5 +1,5 @@
 source common.sh
-component=${component}
+component=dispatch
 
 echo -e "\e[33m Install GoLang \e[0m"
 yum install golang -y  &>>${log}

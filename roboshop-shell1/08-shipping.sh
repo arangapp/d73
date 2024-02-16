@@ -1,5 +1,5 @@
 source common.sh
-component=${component}
+component=shipping
 
 echo -e "\e[33m Install Maven \e[0m"
 dnf install maven -y &>>${log}

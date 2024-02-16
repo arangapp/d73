@@ -1,5 +1,5 @@
 source common.sh
-component=${component}
+component=redis
 
 echo -e "\e[33m Install rpm \e[0m"
 dnf install https://rpms.remirepo.net/enterprise/remi-release-8.rpm -y &>>${log}

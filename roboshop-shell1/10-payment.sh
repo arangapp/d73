@@ -1,5 +1,5 @@
 source common.sh
-component=paymentn
+component=payment
 
 echo -e "\e[33m Install python3.6 \e[0m"
 dnf install python36 gcc python3-devel -y &>>${log}

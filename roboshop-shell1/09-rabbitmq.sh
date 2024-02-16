@@ -1,5 +1,5 @@
 source common.sh
-component=${component}
+component=rabbitmq
 
 echo -e "\e[33m configure yum repos \e[0m"
 curl -s https://packagecloud.io/install/repositories/${component}/erlang/script.rpm.sh | bash &>>${log}

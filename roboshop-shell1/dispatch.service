@@ -1,5 +1,5 @@
 [Unit]
-Description = ${component} Service
+Description = Dispatch Service
 [Service]
 ${component}=roboshop
 Environment=AMQP_HOST=${component}-dev.adevlearn.shop

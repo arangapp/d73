@@ -1,5 +1,5 @@
 [Unit]
-Description = ${component} Service
+Description = Cart Service
 [Service]
 ${component}=roboshop
 Environment=${component}_HOST=${component}-dev.adevlearn.shop

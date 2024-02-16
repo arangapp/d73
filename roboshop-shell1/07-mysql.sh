@@ -1,5 +1,5 @@
 source common.sh
-component=${component}
+component=mysql
 
 echo -e "\e[33m disable ${component} 8 version \e[0m"
 dnf module disable ${component} -y  &>>${log}

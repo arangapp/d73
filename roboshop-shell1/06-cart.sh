@@ -1,5 +1,5 @@
 source common.sh
-component=${component}
+component=cart
 
 echo -e "\e[33m module disable nodejs \e[0m"
 dnf module disable nodejs -y &>> ${log}
