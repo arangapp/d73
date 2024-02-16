@@ -1,5 +1,5 @@
 
-log="${log}"
+log="/tmp/roboshop.log"
 
 VALIDATE(){
 if [ $1 -ne 0 ]; then
