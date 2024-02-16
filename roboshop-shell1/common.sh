@@ -1,5 +1,5 @@
 
-log=/tmp/roboshop.log
+log="/tmp/roboshop.log"
 
 USERID=$(id -u)
 
