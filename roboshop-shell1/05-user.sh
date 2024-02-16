@@ -14,7 +14,7 @@ dnf install nodejs -y &>>${log}
 VALIDATE $?
 
 echo -e "\e[33m add ${component} \e[0m"
-#id roboshop &>>${log}
+id roboshop &>>${log}
 userdel roboshop &>>${log}
 useradd roboshop &>>${log}
 VALIDATE $?
