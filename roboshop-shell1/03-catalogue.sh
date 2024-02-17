@@ -4,7 +4,7 @@ component=catalogue
 nodejs
 
 echo -e "${color} setup MongoDB repo  ${nocolor}"
-yum install mongodb-org-shell -y &>>${log}
+dnf install mongodb-org-shell -y &>>${log}
 mongo --host mongodb-dev.adevlearn.shop </app/schema/${component}.js &>>${log}
 VALIDATE $?
 
