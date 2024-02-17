@@ -1,8 +1,6 @@
 source common.sh
 component=cart
-
 nodejs
-
 echo -e "${color} Setup SystemD ${component} Service ${nocolor}"
 cp /home/centos/d73/roboshop-shell1/${component}.service  /etc/systemd/system/${component}.service &>>${log}
 VALIDATE $?
