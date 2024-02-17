@@ -20,14 +20,15 @@ mkdir /app &>>${log}
 status_check $?
 
 echo -e "${color} Download Application code ${nocolor}"
-curl -L -o /tmp/${component}.zip https://roboshop-artifacts.s3.amazonaws.com/${component}.zip &>>${log}
-unzip /tmp/${component}.zip &>>${log}
+curl -L -o /tmp/dispatch.zip https://roboshop-artifacts.s3.amazonaws.com/dispatch.zip &>>${log}
+cd /app &>>${log}
+unzip /tmp/dispatch.zip &>>${log}
 status_check $?
 
 echo -e "${color} Download dependencies ${nocolor}"
-cd /app &>>${log}
-go mod init ${component} &>>${log}
-go get &>>${log}
+cd /app  &>>${log}
+go mod init dispatch &>>${log}
+go get  &>>${log}
 go build &>>${log}
 status_check $?
 
