@@ -1,7 +1,7 @@
 
 log="/tmp/roboshop.log"
-color="${color}"
-nocolor="${nocolor}"
+color="\e[33m"
+nocolor="\e[0m"
 
 USERID=$(id -u)
 
