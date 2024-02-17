@@ -40,7 +40,7 @@ systemctl daemon-reload &>>${log}
 status_check $?
 
 echo -e "${color} Load Schema ${nocolor}"
-${component} -h ${component}-dev.adevlearn.shop -uroot -pRoboShop@1 < /app/schema/${component}.sql &>>${log}
+mysql  -h mysql-dev.adevlearn.shop -uroot -pRoboShop@1 < /app/schema/${component}.sql &>>${log}
 status_check $?
 
 echo -e "${color} enable & restart Server ${nocolor}"
