@@ -15,6 +15,10 @@ echo -e "${color} remove add directory ${nocolor}"
 rm -rf /app
 status_check $?
 
+echo -e "${color} add directory ${nocolor}"
+mkdir /app &>>${log}
+status_check $?
+
 echo -e "${color}  Download the application code ${nocolor}"
 curl -L -o /tmp/${component}.zip https://roboshop-artifacts.s3.amazonaws.com/${component}.zip &>>${log}
 cd /app &>>${log}
