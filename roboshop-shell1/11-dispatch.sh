@@ -5,11 +5,17 @@ echo -e "${color} Install GoLang ${nocolor}"
 yum install golang -y  &>>${log}
 status_check $?
 
-echo -e "\e[33 mAdd application ${component} ${nocolor}"
+echo -e "${color} Add application ${component} ${nocolor}"
+id roboshop &>>${log}
+userdel roboshop &>>${log}
 useradd roboshop &>>${log}
 status_check $?
 
-echo -e "${color} setup an app directory ${nocolor}"
+echo -e "${color} remove add directory ${nocolor}"
+rm -rf /app
+status_check $?
+
+echo -e "${color} add directory ${nocolor}"
 mkdir /app &>>${log}
 status_check $?
 
