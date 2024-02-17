@@ -29,8 +29,8 @@ echo -e "${color} setup SystemD ${component} Service ${nocolor}"
 cp /home/centos/d73/roboshop-shell1/${component}.service /etc/systemd/system/${component}.service &>>${log}
 VALIDATE $?
 
-echo -e "${color} Install ${component} client ${nocolor}"
-dnf install ${component} -y  &>>${log}
+echo -e "${color} Install mysql client ${nocolor}"
+dnf install mysql -y  &>>${log}
 VALIDATE $?
 
 echo -e "${color}  Load the service ${nocolor}"
