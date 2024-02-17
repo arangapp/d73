@@ -3,16 +3,16 @@ component=catalogue
 
 nodejs
 
-echo -e "\e[33m setup MongoDB repo  \e[0m"
+echo -e "${color} setup MongoDB repo  ${nocolor}"
 yum install mongodb-org-shell -y &>>${log}
 mongo --host mongodb-dev.adevlearn.shop </app/schema/${component}.js &>>${log}
 VALIDATE $?
 
-echo -e "\e[33m Load the service \e[0m"
+echo -e "${color} Load the service ${nocolor}"
 systemctl daemon-reload &>>${log}
 VALIDATE $?
 
-echo -e "\e[33m enable & Start the service \e[0m"
+echo -e "${color} enable & Start the service ${nocolor}"
 systemctl enable ${component} &>>${log}
 systemctl restart ${component} &>>${log}
 VALIDATE $?
