@@ -45,15 +45,9 @@ cp /home/centos/d73/roboshop-shell1/${component}.service  /etc/systemd/system/${
 cp /home/centos/d73/roboshop-shell1/mongo.repo  /etc/yum.repos.d/mongo.repo &>>${log}
 VALIDATE $?
 
-cd /app
-echo -e "${color} Setup SystemD ${component} Service ${nocolor}"
-cp /home/centos/d73/roboshop-shell1/${component}.service  /etc/systemd/system/${component}.service &>>${log}
-VALIDATE $?
-
 echo -e "\e[33 Load the service ${nocolor}"
 systemctl daemon-reload &>> ${log}
 VALIDATE $?
-
 
 echo -e "\e[33 setup mongodb repo ${nocolor}"
 cd /home/centos/d73/roboshop-shell1/mongo.repo /etc/yum.repos.d/mongo.repo &>>${log}
