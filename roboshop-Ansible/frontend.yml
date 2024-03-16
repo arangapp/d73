@@ -1,0 +1,7 @@
+name: Setup Frontend
+hosts: all
+tasks:
+  - name: Install Nginx Server
+    ansible.builtin.yum:
+      name: httpd
+      state: latest
