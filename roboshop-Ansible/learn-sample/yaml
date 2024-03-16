@@ -1,0 +1,36 @@
+---
+- name: Update packages, restart, and check status
+  hosts: all
+  become: yes
+  tasks:
+    - name: Update packages
+      yum:
+        name: '*'
+        state: latest
+      register: yum_update
+
+    - name: Restart system
+      command: "reboot"
+      async: 1
+      poll: 0
+      ignore_errors: yes
+      when: yum_update.changed
+
+    - name: Wait for system to come back online
+      wait_for_connection:
+        timeout: 300
+
+    - name: Check system status
+      shell: "systemctl is-active my_service"
+      register: service_status
+      ignore_errors: yes
+
+    - name: Log update status
+      debug:
+        msg: "{{ yum_update.stdout_lines }}"
+      when: yum_update.changed
+
+    - name: Log system status
+      debug:
+        msg: "{{ service_status.stdout }}"
+      when: service_status is defined
