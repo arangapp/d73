@@ -1,5 +1,8 @@
 name: Setup Frontend
 hosts: all
+become: true  # Enable sudo for all tasks in this playbook
+become_user: root  # Optionally, specify the user to become
+
 tasks:
   - name: Install Nginx Server
     ansible.builtin.yum:
