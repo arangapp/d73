@@ -1,0 +1,60 @@
+---
+- name: Configure Ansible Control Node
+  hosts: all
+  become: true
+  tasks:
+    - name: Install Ansible
+      package:
+        name: ansible
+        state: present
+
+    - name: Create a new user
+      user:
+        name: ansibleuser
+        password: "{{ lookup('password', '/dev/null length=15 chars=ascii_letters,digits') | password_hash('sha512') }}"
+        shell: /bin/bash
+
+    - name: Add ansibleuser to sudoers
+      lineinfile:
+        dest: /etc/sudoers
+        line: "ansibleuser ALL=(ALL) NOPASSWD: ALL"
+        validate: 'visudo -cf %s'
+
+    - name: Enable password authentication in sshd_config
+      lineinfile:
+        dest: /etc/ssh/sshd_config
+        regexp: '^#?PasswordAuthentication'
+        line: 'PasswordAuthentication yes'
+      notify: restart sshd
+
+    - name: Generate SSH key for ansibleuser
+      ansible.builtin.openssh_keypair:
+        path: "/home/ansibleuser/.ssh/id_rsa"
+        type: rsa
+        size: 2048
+        state: present
+        owner: ansibleuser
+        group: ansibleuser
+
+    - name: Create ansible.cfg file
+      copy:
+        dest: /etc/ansible/ansible.cfg
+        content: |
+          [defaults]
+          inventory = /etc/ansible/hosts
+          remote_user = ansibleuser
+          private_key = /home/ansibleuser/.ssh/id_rsa
+          host_key_checking = False
+          timeout = 30
+      notify: restart ansible
+
+  handlers:
+    - name: restart sshd
+      service:
+        name: sshd
+        state: restarted
+
+    - name: restart ansible
+      service:
+        name: ansible
+        state: restarted

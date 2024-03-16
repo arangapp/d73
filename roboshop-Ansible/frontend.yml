@@ -1,7 +1,6 @@
 name: Setup Frontend
 hosts: all
-become: true  # Enable sudo for all tasks in this playbook
-become_user: root  # Optionally, specify the user to become
+become: yes  # Enable sudo for all tasks in this playbook
 
 tasks:
   - name: Install Nginx Server
