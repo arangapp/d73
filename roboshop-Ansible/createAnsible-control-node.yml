@@ -1,40 +1,35 @@
 ---
-- name: Configure Ansible Control Node
+- name: Setup Ansible control node
   hosts: all
-  become: true
+  gather_facts: no
+  become: yes
   tasks:
-    - name: Install Ansible
-      package:
-        name: ansible
-        state: present
-
     - name: Create a new user
       user:
-        name: ansibleuser
-        password: "{{ lookup('password', '/dev/null length=15 chars=ascii_letters,digits') | password_hash('sha512') }}"
+        name: "{{ ansible_user }}"
+        password: "{{ ansible_password | password_hash('sha512') }}"
         shell: /bin/bash
+        update_password: on_create
 
-    - name: Add ansibleuser to sudoers
-      lineinfile:
-        dest: /etc/sudoers
-        line: "ansibleuser ALL=(ALL) NOPASSWD: ALL"
-        validate: 'visudo -cf %s'
+    - name: Add the new user to sudoers file
+      copy:
+        dest: /etc/sudoers.d/{{ ansible_user }}
+        content: "{{ ansible_user }} ALL=(ALL) NOPASSWD: ALL"
+        mode: '0440'
+      become: yes
 
     - name: Enable password authentication in sshd_config
       lineinfile:
-        dest: /etc/ssh/sshd_config
+        path: /etc/ssh/sshd_config
         regexp: '^#?PasswordAuthentication'
         line: 'PasswordAuthentication yes'
       notify: restart sshd
 
-    - name: Generate SSH key for ansibleuser
-      ansible.builtin.openssh_keypair:
-        path: "/home/ansibleuser/.ssh/id_rsa"
-        type: rsa
+    - name: Generate SSH key for the new user
+      become_user: "{{ ansible_user }}"
+      ansible.posix.ssh_keypair:
+        path: ~/.ssh/id_rsa
         size: 2048
-        state: present
-        owner: ansibleuser
-        group: ansibleuser
 
     - name: Create ansible.cfg file
       copy:
@@ -42,10 +37,16 @@
         content: |
           [defaults]
           inventory = /etc/ansible/hosts
-          remote_user = ansibleuser
-          private_key = /home/ansibleuser/.ssh/id_rsa
+          remote_user = {{ ansible_user }}
+          private_key_file = ~/.ssh/id_rsa
           host_key_checking = False
+          log_path = /var/log/ansible.log
           timeout = 30
+          [privilege_escalation]
+          become = True
+          become_method = sudo
+          become_user = root
+          become_ask_pass = False
       notify: restart ansible
 
   handlers:
@@ -53,7 +54,6 @@
       service:
         name: sshd
         state: restarted
-
     - name: restart ansible
       service:
         name: ansible
