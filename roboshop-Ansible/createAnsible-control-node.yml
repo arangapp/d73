@@ -26,10 +26,14 @@
       notify: restart sshd
 
     - name: Generate SSH key for the new user
-      become_user: "{{ ansible_user }}"
-      ansible.posix.ssh_keypair:
-        path: ~/.ssh/id_rsa
+      ansible.builtin.openssh_keypair:
+        path: /home/{{ ansible_user }}/.ssh/id_rsa
+        type: rsa
         size: 2048
+        state: present
+        owner: "{{ ansible_user }}"
+        group: "{{ ansible_user }}"
+      become: yes
 
     - name: Create ansible.cfg file
       copy:
@@ -38,7 +42,7 @@
           [defaults]
           inventory = /etc/ansible/hosts
           remote_user = {{ ansible_user }}
-          private_key_file = ~/.ssh/id_rsa
+          private_key_file = /home/{{ ansible_user }}/.ssh/id_rsa
           host_key_checking = False
           log_path = /var/log/ansible.log
           timeout = 30
