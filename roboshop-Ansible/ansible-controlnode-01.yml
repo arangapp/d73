@@ -1,0 +1,58 @@
+---
+- name: Setup Ansible Control Node
+  hosts: localhost
+  become: yes
+  tasks:
+    - name: Create a new user
+      user:
+        name: ansible_user  # Change this to your desired username
+        password: "{{ ansible_password }}"  # Provide password as extra variable
+        shell: /bin/bash
+        createhome: yes
+
+    - name: Add the new user to sudoers file
+      copy:
+        dest: /etc/sudoers.d/ansible_user
+        content: "{{ ansible_user }} ALL=(ALL) NOPASSWD: ALL"
+        mode: '0440'
+
+    - name: Enable password authentication in sshd_config
+      lineinfile:
+        path: /etc/ssh/sshd_config
+        regexp: '^#?PasswordAuthentication'
+        line: 'PasswordAuthentication yes'
+      notify: restart sshd
+
+    - name: Generate SSH key for the new user
+      ansible.builtin.openssh_keypair:
+        path: /home/ansible_user/.ssh/id_rsa
+        state: present
+
+    - name: Create ansible.cfg file
+      copy:
+        dest: /etc/ansible/ansible.cfg
+        content: |
+          [defaults]
+          inventory = /etc/ansible/hosts
+          remote_user = ansible_user
+          private_key_file = /home/ansible_user/.ssh/id_rsa
+          host_key_checking = False
+          log_path = /var/log/ansible.log
+          timeout = 30
+          [privilege_escalation]
+          become = True
+          become_method = sudo
+          become_user = root
+          become_ask_pass = False
+      notify: restart ansible
+
+    - name: Restart sshd service
+      service:
+        name: sshd
+        state: restarted
+
+  handlers:
+    - name: Restart ansible service
+      service:
+        name: ansible
+        state: restarted
