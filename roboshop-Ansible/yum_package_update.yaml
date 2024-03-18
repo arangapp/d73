@@ -1,0 +1,36 @@
+---
+- name: Update YUM Packages and Restart if Required
+  hosts: all
+  become: yes
+  vars:
+    log_file: "/tmp/ansible_yum_packageupdate.log"
+
+  tasks:
+    - name: Update YUM Packages
+      yum:
+        name: '*'
+        state: latest
+      register: yum_update_output
+
+    - name: Log YUM Package Update Output
+      ansible.builtin.copy:
+        content: "{{ yum_update_output }}"
+        dest: "{{ log_file }}"
+        mode: 'a'
+      when: yum_update_output.changed
+
+    - name: Check if restart required
+      ansible.builtin.shell: needs-restarting -r
+      register: restart_required
+      ignore_errors: yes
+
+    - name: Log restart check output
+      ansible.builtin.copy:
+        content: "{{ restart_required.stdout }}"
+        dest: "{{ log_file }}"
+        mode: 'a'
+      when: restart_required is defined
+
+    - name: Restart if required
+      ansible.builtin.reboot:
+      when: restart_required.stdout | bool
