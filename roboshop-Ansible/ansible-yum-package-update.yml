@@ -1,34 +1,44 @@
 ---
-- name: Update YUM packages and restart if required
+- name: YUM Package Update on RHEL
   hosts: all
   become: true
-
   tasks:
-    - name: Update YUM packages
+    - name: YUM Package Update
       yum:
         name: '*'
         state: latest
-      register: yum_update
+      register: yum_update_result
 
     - name: Check if restart is required
       command: needs-restarting -r
       register: restart_required
-      ignore_errors: true
-      changed_when: restart_required.rc == 0  # Only consider changed if exit code is 0
+      changed_when: false
 
     - name: Restart if required
-      command: shutdown -r now "Ansible YUM update requires restart"
-      when: restart_required.stdout != ""
+      command: shutdown -r +1 "Ansible YUM update requires restart"
+      async: 0
+      poll: 0
+      ignore_errors: true
+      when: restart_required.rc == 0
+
+    - name: Wait for the server to come back online
+      local_action: wait_for
+      args:
+        host: "{{ inventory_hostname }}"
+        port: 22
+        state: started
+        delay: 60
+        timeout: 600
+        connect_timeout: 5
 
     - name: Check status after update
       command: yum check-update
-      register: yum_check
+      register: yum_check_result
 
     - name: Create log file
       copy:
         content: |
-          YUM update status: {{ yum_update }}
-          Restart required: {{ restart_required.stdout }}
-          Restart command exit code: {{ restart_required.rc }}
-          YUM check status: {{ yum_check.stdout }}
-        dest: /var/log/yum-update.log
+          YUM update status: {{ yum_update_result }}
+          Restart required: {{ 'Yes' if restart_required.rc == 0 else 'No' }}
+          YUM check status: {{ yum_check_result }}
+        dest: /var/log/ansible-yum-update.log
