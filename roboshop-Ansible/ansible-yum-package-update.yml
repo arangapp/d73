@@ -31,7 +31,7 @@
         timeout: 600
         connect_timeout: 5
 
-    - name: Check status after update
+    - name: Check status after updates
       command: yum check-update
       register: yum_check_result
 
