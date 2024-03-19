@@ -1,0 +1,34 @@
+---
+- name: Update YUM packages and restart if required
+  hosts: all
+  become: true
+
+  tasks:
+    - name: Update YUM packages
+      yum:
+        name: '*'
+        state: latest
+      register: yum_update
+
+    - name: Check if restart is required
+      command: needs-restarting -r
+      register: restart_required
+      ignore_errors: true
+      changed_when: restart_required.rc == 0  # Only consider changed if exit code is 0
+
+    - name: Restart if required
+      command: shutdown -r now "Ansible YUM update requires restart"
+      when: restart_required.stdout != ""
+
+    - name: Check status after update
+      command: yum check-update
+      register: yum_check
+
+    - name: Create log file
+      copy:
+        content: |
+          YUM update status: {{ yum_update }}
+          Restart required: {{ restart_required.stdout }}
+          Restart command exit code: {{ restart_required.rc }}
+          YUM check status: {{ yum_check.stdout }}
+        dest: /var/log/yum-update.log
