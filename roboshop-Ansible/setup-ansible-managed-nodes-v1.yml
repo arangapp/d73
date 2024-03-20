@@ -1,0 +1,81 @@
+---
+- name: Configure RHEL 8.x Server
+  hosts: localhost
+  become: yes
+  vars_prompt:
+    - name: admin_username
+      prompt: "Enter admin username:"
+      private: no
+    - name: admin_password
+      prompt: "Enter admin password:"
+      private: yes
+    - name: managed_hosts
+      prompt: "Enter the IP addresses of managed hosts (comma-separated):"
+      private: no
+  tasks:
+    - name: Install Python 3
+      yum:
+        name: python3
+        state: present
+
+    - name: Set Python 3 as default
+      alternatives:
+        name: python
+        path: /usr/bin/python3
+
+    - name: Check Python version
+      command: python --version
+
+    - name: Install python-pip
+      yum:
+        name: python3-pip
+        state: present
+
+    - name: Create admin user
+      user:
+        name: "{{ admin_username }}"
+        password: "{{ admin_password }}"
+        state: present
+        shell: /bin/bash
+
+    - name: Add admin user to sudoers
+      lineinfile:
+        dest: /etc/sudoers
+        line: "{{ admin_username }} ALL=(ALL) NOPASSWD: ALL"
+        validate: 'visudo -cf %s'
+        state: present
+
+    - name: Enable password authentication
+      lineinfile:
+        dest: /etc/ssh/sshd_config
+        regexp: '^PasswordAuthentication'
+        line: 'PasswordAuthentication yes'
+        state: present
+      notify: Reload SSH Service
+
+    - name: Install Ansible as admin user
+      become_user: "{{ admin_username }}"
+      pip:
+        name: ansible
+        executable: pip3
+        state: present
+
+    - name: Check Ansible version
+      become_user: "{{ admin_username }}"
+      command: ansible --version
+
+    - name: Generate SSH key
+      become_user: "{{ admin_username }}"
+      command: ssh-keygen
+      args:
+        creates: "/home/{{ admin_username }}/.ssh/id_rsa"
+
+    - name: Copy SSH key to managed hosts
+      shell: ssh-copy-id -i /home/{{ admin_username }}/.ssh/id_rsa.pub {{ admin_username }}@{{ item }}
+      with_items: "{{ managed_hosts.split(',') }}"
+
+  handlers:
+    - name: Reload SSH Service
+      service:
+        name: sshd
+        state: reloaded
