@@ -14,7 +14,10 @@
       authorized_key:
         user: "{{ ansible_user }}"
         key: "{{ lookup('file', '~/.ssh/id_rsa.pub') }}"
+        state: present
       become: yes
       become_user: root
       vars:
         ansible_ssh_pass: "{{ ansible_password }}"
+      # Add this line to allow sudo without password prompt
+      become_flags: "-H -S -n"
