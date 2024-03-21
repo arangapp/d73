@@ -1,0 +1,20 @@
+---
+- name: Copy SSH key to managed nodes
+  hosts: all
+  gather_facts: no
+  vars_prompt:
+    - name: ansible_user
+      prompt: "Enter Ansible username"
+      private: no
+    - name: ansible_password
+      prompt: "Enter Ansible user password"
+      private: yes
+  tasks:
+    - name: Copy SSH key to authorized_keys
+      authorized_key:
+        user: "{{ ansible_user }}"
+        key: "{{ lookup('file', '~/.ssh/id_rsa.pub') }}"
+      become: yes
+      become_user: root
+      vars:
+        ansible_ssh_pass: "{{ ansible_password }}"

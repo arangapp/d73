@@ -23,13 +23,6 @@ add_to_sudoers() {
     log_message "User added to sudoers file."
 }
 
-# Function to generate SSH key pair
-generate_ssh_key() {
-    log_message "Generating SSH key pair..."
-    sudo -u $USERNAME ssh-keygen -t rsa -b 4096 -f /home/$USERNAME/.ssh/id_rsa -N ""
-    log_message "SSH key pair generated successfully."
-}
-
 # Function to enable password-based authentication
 enable_password_auth() {
     log_message "Enabling password-based authentication..."
@@ -38,28 +31,36 @@ enable_password_auth() {
     log_message "Password-based authentication enabled."
 }
 
+
+# Function to generate SSH key pair
+generate_ssh_key() {
+    log_message "Generating SSH key pair..."
+    sudo su - $USERNAME -c "ssh-keygen -t rsa -b 4096 -f /home/$USERNAME/.ssh/id_rsa -N \"\""
+    log_message "SSH key pair generated successfully."
+}
+
 # Function to create ansible directory and configuration files
 setup_ansible() {
     log_message "Setting up Ansible directory and configuration files..."
-    sudo mkdir -p /etc/ansible
-    sudo ansible-config init --disabled > /etc/ansible/ansible.cfg
-    sudo ansible-config init --disabled -t all >> /etc/ansible/ansible.cfg
-    sudo touch /etc/ansible/hosts
+    sudo su - ansadmin -c 'mkdir -p /etc/ansible'
+    sudo su - ansadmin -c 'ansible-config init --disabled > /etc/ansible/ansible.cfg'
+    sudo su - ansadmin -c 'ansible-config init --disabled -t all >> /etc/ansible/ansible.cfg'
+    sudo su - ansadmin -c 'touch /etc/ansible/hosts'
     log_message "Ansible directory and configuration files set up."
 }
 
 # Function to install Ansible
 install_ansible() {
     log_message "Installing Ansible..."
-    sudo yum update -y
-    sudo yum install ansible -y
+    sudo su - ansadmin -c 'yum update -y'
+    sudo su - ansadmin -c 'yum install ansible -y'
     log_message "Ansible installed successfully."
 }
 
 # Function to verify Ansible version
 verify_ansible_version() {
     log_message "Verifying Ansible version..."
-    ansible --version >> "$LOG_FILE" 2>&1
+    sudo su - ansadmin -c 'ansible --version' >> "$LOG_FILE" 2>&1
     log_message "Ansible version verified."
 }
 
@@ -77,8 +78,8 @@ echo
 # Execute functions
 create_user
 add_to_sudoers
-generate_ssh_key
 enable_password_auth
+generate_ssh_key
 setup_ansible
 install_ansible
 verify_ansible_version
