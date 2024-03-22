@@ -33,7 +33,7 @@ generate_ssh_key() {
 # Function to enable password-based authentication
 enable_password_auth() {
     log_message "Enabling password-based authentication..."
-    sudo sed -i 's/^PasswordAuthentication no/PasswordAuthentication yes/g' /etc/ssh/sshd_config
+    sudo sed -i 's/#PasswordAuthentication no/PasswordAuthentication yes/g' /etc/ssh/sshd_config
     sudo systemctl restart sshd
     log_message "Password-based authentication enabled."
 }

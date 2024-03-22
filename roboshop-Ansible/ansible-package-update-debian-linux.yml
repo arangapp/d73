@@ -1,0 +1,54 @@
+Here's an example Ansible playbook for updating Debian Linux packages, checking if a restart is required, restarting if necessary, and creating a log file for each step:
+
+  ```
+---
+- name: Update Debian packages
+  hosts: all
+  become: true
+
+  tasks:
+    - name: Update package cache
+      apt:
+        update_cache: yes
+      register: update_cache
+
+    - name: Upgrade packages
+      apt:
+        upgrade: yes
+        autoremove: yes
+        autoclean: yes
+      register: upgrade_packages
+
+    - name: Check if restart is required
+      shell: needs-restarting -r
+      register: restart_required
+      changed_when: false
+      ignore_errors: true
+
+    - name: Restart if required
+      reboot:
+        msg: "Rebooting to apply updates"
+        connect_timeout: 5
+        reboot_timeout: 300
+        pre_reboot_delay: 0
+        post_reboot_delay: 30
+      when: restart_required.stdout != ""
+
+    - name: Wait for server to come back online
+      wait_for_connection:
+        delay: 5
+        timeout: 300
+
+    - name: Check status after update
+      shell: dpkg -l
+      register: check_status
+
+    - name: Create log file for each step
+      copy:
+        content: "{{ item.stdout }}"
+        dest: "/var/log/ansible/{{ item.item }}.log"
+      with_items:
+        - { item: "update_cache", stdout: "{{ update_cache.stdout }}" }
+        - { item: "upgrade_packages", stdout: "{{ upgrade_packages.stdout }}" }
+        - { item: "restart_required", stdout: "{{ restart_required.stdout }}" }
+        - { item: "check_status", stdout: "{{ check_status.stdout }}" }
