@@ -17,10 +17,9 @@
       register: upgrade_packages
 
     - name: Check if restart is required
-      shell: needs-restarting -r
-      register: restart_required
-      changed_when: false
-      ignore_errors: true
+      command: checkrestart
+      register: restart_check
+      ignore_errors: yes
 
     - name: Restart if required
       reboot:
@@ -41,11 +40,6 @@
       register: check_status
 
     - name: Create log file for each step
-      copy:
-        content: "{{ item.stdout }}"
-        dest: "/var/log/ansible/{{ item.item }}.log"
-      with_items:
-        - { item: "update_cache", stdout: "{{ update_cache.stdout }}" }
-        - { item: "upgrade_packages", stdout: "{{ upgrade_packages.stdout }}" }
-        - { item: "restart_required", stdout: "{{ restart_required.stdout }}" }
-        - { item: "check_status", stdout: "{{ check_status.stdout }}" }
+      ansible.builtin.copy:
+        content: "{{ ansible_run_result | to_nice_json }}"
+        dest: /tmp/ansible-debian-package-update.log
