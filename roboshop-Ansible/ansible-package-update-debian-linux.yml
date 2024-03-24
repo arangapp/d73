@@ -1,6 +1,3 @@
-Here's an example Ansible playbook for updating Debian Linux packages, checking if a restart is required, restarting if necessary, and creating a log file for each step:
-
-  ```
 ---
 - name: Update Debian packages
   hosts: all
