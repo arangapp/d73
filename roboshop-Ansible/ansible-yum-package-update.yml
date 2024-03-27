@@ -41,4 +41,4 @@
           YUM update status: {{ yum_update_result }}
           Restart required: {{ 'Yes' if restart_required.rc == 0 else 'No' }}
           YUM check status: {{ yum_check_result }}
-        dest: /var/log/ansible-yum-update.log
+        dest: /var/log/ansible/ansible-yum-update-{{ inventory_hostname }}.log
