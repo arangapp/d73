@@ -5,11 +5,11 @@
     - name: Installing Nginx Server
       ansible.builtin.yum:
         name: nginx
-        state: present
+        state: latest
 
     - name : Remove directory
       ansible.builtin.file:
-        path: /usr/share/nginx/html/*
+        path: /usr/share/nginx/html
         state: absent
 
     - name: Create directory
@@ -31,6 +31,5 @@
     - name: Start nginx Service
       ansible.builtin.systemd:
         state: restarted
-        daemon_reload: true
         name: nginx
 
