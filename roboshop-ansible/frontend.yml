@@ -31,5 +31,4 @@
       ansible.builtin.systemd:
         state: started
         name: nginx
-        enable: true
 
