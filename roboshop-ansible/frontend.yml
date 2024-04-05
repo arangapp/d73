@@ -32,5 +32,5 @@
       ansible.builtin.systemd:
         state: restarted
         name: nginx
-        ignore_errors: true
+      failed_when: false
 
