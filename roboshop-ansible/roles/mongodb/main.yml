@@ -19,9 +19,4 @@
       ansible.builtin.systemd:
         state: restarted
         name: nginx
-        ailed_when: false
-
-echo -e "${color} Enable & Restart MongoDB ${nocolor}"
-systemctl enable mongod &>>${log}
-systemctl restart mongod  &>>${log}
-status_check $? "restart"
+      failed_when: false
