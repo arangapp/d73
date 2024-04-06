@@ -18,5 +18,5 @@
     - name: Enable & Restart MongoDB
       ansible.builtin.systemd:
         state: restarted
-        name: nginx
+        name: mongod
       failed_when: false
