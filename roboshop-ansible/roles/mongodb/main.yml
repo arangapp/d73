@@ -1,0 +1,27 @@
+- name: Setup MongoDB
+  hosts: all
+  become: yes
+  tasks:
+    -name: Setup the MongoDB repo file
+    ansible.builtin.copy:
+      src: mongo.repo
+      dest: /etc/yum.repos.d/mongo.repo
+    -name: Install MongoDB
+    ansible.builtin.yum:
+      name: mongodb-org
+      state: latest
+    - name: Update listen address
+    ansible.builtin.replace:
+        path: /etc/hosts
+        regexp: '127.0.0.1'
+        replace: '0.0.0.0'
+    - name: Enable & Restart MongoDB
+      ansible.builtin.systemd:
+        state: restarted
+        name: nginx
+        ailed_when: false
+
+echo -e "${color} Enable & Restart MongoDB ${nocolor}"
+systemctl enable mongod &>>${log}
+systemctl restart mongod  &>>${log}
+status_check $? "restart"
