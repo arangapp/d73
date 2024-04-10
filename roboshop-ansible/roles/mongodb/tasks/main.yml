@@ -1,7 +1,8 @@
     - name: Setup the MongoDB repo file
       ansible.builtin.copy:
-        src: /home/centos/d73/roboshop-ansible/roles/mongodb/files/mongodb.repo
+        src: mongodb.repo
         dest: /etc/yum.repos.d/mongo.repo
+        remote_src: true
     - name: Install MongoDb
       ansible.builtin.yum:
         name: mongodb-org
